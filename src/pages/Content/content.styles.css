@@ -1,0 +1,27 @@
+/* cccolor: #03A9F4; */
+
+.issue-finder {  /*.issue-finder:hover {*/
+    display: inline-flex;
+    align-items: center;
+    -webkit-font-smoothing: antialiased;
+    font-family: 'Google Sans', Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+    font-size: 1rem;
+    font-variant-ligatures: no-contextual;
+    color: #202124;
+    font-weight: 400;
+    cursor: pointer;
+    line-height: 28px;
+    min-height: 28px;
+    vertical-align: bottom;
+  }
+
+  .issue-finder > img {
+      width: 20px;
+      height: 20px;
+      top: 0ex !important;
+      padding: 4px 0px;
+  }
+
+  .issue-finder > span {
+    top: 0ex !important;
+}
