@@ -70,7 +70,6 @@ async function getWebAppLocalStorage() {
             files: ["web-app-storage.js"]
         });
         console.log('results.length', results.length);
-        
         for (let item of results) {
             console.log('item', item);
             if (item.result) {
@@ -93,6 +92,7 @@ async function getWebAppLocalStorage() {
         console.log(`Problem with getting the ${key}`, err)
     }    
 }
+
 
 function injectedFunction() {
     const elem = document.querySelector("div.nH.V8djrc > div.nH > div.ha:not(.issue-finder-parent)")
@@ -133,16 +133,21 @@ function injectedFunction() {
     //document.body.style.backgroundColor = 'orange';
 }
 
+var btnSyncHandlerInjected = false;
+
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
     if (tab.status === "complete") {
         console.log(">>> completed", tab.url)
-        if (tab.url.includes("https://slavkopar.github.io/Support")) {
-            await getWebAppLocalStorage();
-            return;
+        if (tab.url.includes("/Support")) { //https://slavkopar.github.io/Support")) {
+            if (!btnSyncHandlerInjected) {
+                console.log('btnSyncHandlerInjected', btnSyncHandlerInjected)
+                btnSyncHandlerInjected = true;
+                await getWebAppLocalStorage();
+            }
         }
         else if (tab.url.includes('https://mail.google.com/mail/')) {
             try {
-                //aBrowser.tabs.insertCSS(tabId, {file: "integrations/style.css"});
+                //aBrowser.tabs.insertCSS(tabId, {file: "x.css"});
                 // const results = await chrome.scripting.executeScript({
                 //     target: {tabId: tab.id}, 
                 //     files: ["draw-button.js"]

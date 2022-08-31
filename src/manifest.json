@@ -41,7 +41,7 @@
   ],
   "host_permissions": [
     "https://slavkopar.github.io/Support/#/",
-    "http://localhost:3001/Support2#/",
+    "http://localhost:3001/Support#/",
     "https://mail.google.com/mail/*"
   ]
 }
