@@ -153,7 +153,7 @@ var options = {
       patterns: [
         {
           from: 'src/assets/img/icon-128.png',
-          to: path.join(__dirname, 'build'),
+          to: path.join(__dirname, 'build/images'),
           force: true,
         },
       ],
@@ -162,7 +162,7 @@ var options = {
       patterns: [
         {
           from: 'src/assets/img/icon-34.png',
-          to: path.join(__dirname, 'build'),
+          to: path.join(__dirname, 'build/images'),
           force: true,
         },
       ],
