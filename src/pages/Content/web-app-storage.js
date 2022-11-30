@@ -27,7 +27,7 @@ chrome.storage.onChanged.addListener(function (changes, namespace) {
         `Storage key "${key}" in namespace "${namespace}" changed.`,
         `Old value was:`, oldValue, "new value is:", newValue
       );
-      alert('Zaki');
+      // alert('Zaki');
       var message = {/* whatever */};
       var event = new CustomEvent("PassToBackground", {detail: newValue});
       window.dispatchEvent(event);
