@@ -1,6 +1,6 @@
 /* cccolor: #03A9F4; */
 
-.issue-finder {  /*.issue-finder:hover {*/
+.question-finder {  /*.question-finder:hover {*/
     display: inline-flex;
     align-items: center;
     -webkit-font-smoothing: antialiased;
@@ -10,18 +10,18 @@
     color: #202124;
     font-weight: 400;
     cursor: pointer;
-    line-height: 28px;
-    min-height: 28px;
-    vertical-align: bottom;
+    line-height: 24px;
+    min-height: 24px;
+    vertical-align: middle;
   }
 
-  .issue-finder > img {
+  .question-finder > img {
       width: 20px;
       height: 20px;
       top: 0ex !important;
-      padding: 4px 0px;
+      padding: 0px 0px;
   }
 
-  .issue-finder > span {
+  .question-finder > span {
     top: 0ex !important;
 }

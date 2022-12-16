@@ -45,7 +45,7 @@ var options = {
     panel: path.join(__dirname, 'src', 'pages', 'Panel', 'index.jsx'),
   },
   chromeExtensionBoilerplate: {
-    notHotReload: ['contentScript', 'devtools'],
+    notHotReload: ['background', 'contentScript', 'devtools'],
   },
   output: {
     path: path.resolve(__dirname, 'build'),
@@ -153,7 +153,7 @@ var options = {
       patterns: [
         {
           from: 'src/assets/img/icon-128.png',
-          to: path.join(__dirname, 'build'),
+          to: path.join(__dirname, 'build/images'),
           force: true,
         },
       ],
@@ -162,7 +162,7 @@ var options = {
       patterns: [
         {
           from: 'src/assets/img/icon-34.png',
-          to: path.join(__dirname, 'build'),
+          to: path.join(__dirname, 'build/images'),
           force: true,
         },
       ],
@@ -174,6 +174,10 @@ var options = {
           to: path.join(__dirname, 'build/images'),
           force: true,
         },
+        { from: './src/scripts', 
+          to: path.join(__dirname, 'build/scripts'),
+          force: true
+        }
       ],
     }),      
     new HtmlWebpackPlugin({

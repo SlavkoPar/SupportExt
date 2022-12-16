@@ -1,4 +1,4 @@
-import {secrets} from '../../../secrets.development';
+import { secrets } from '../../../secrets.development';
 
 console.log('This is the background page !');
 console.log('Put the background scripts here.');
@@ -9,32 +9,32 @@ console.log('secrets.myWebApp:', secrets.myWebApp)
 chrome.runtime.onInstalled.addListener((reason) => {
     if (reason === chrome.runtime.OnInstalledReason.INSTALL) {
         console.log('reason', reason)
-      chrome.tabs.create({
-        url: `${secrets.myWebApp}`
-      });
+        chrome.tabs.create({
+            url: `${secrets.myWebApp}`
+        });
     }
-  });
+});
 
-chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
-    console.log('onMessage request >>>>>>>>>>>>>', request)
-    switch (request.eventName) {
+chrome.runtime.onMessage.addListener(message => {
+    console.log('onMessage request >>>>>>>>>>>>>', message)
+    switch (message.eventName) {
         case 'openWebApp':
-            let queryOptions = { url: request.myWebApp }; // 'https://slavkopar.github.io/Support/*'
-            let [tab] = await chrome.tabs.query(queryOptions);
-            console.log('tab', request.myWebApp, tab)
+            let queryOptions = { url: message.myWebApp };
+            let [tab] = chrome.tabs.query(queryOptions);
+            console.log('tab', message.myWebApp, tab)
             if (!tab) {
-                chrome.tabs.create({url:request.myWebApp});
+                chrome.tabs.create({ url: message.myWebApp });
             }
             break;
 
-        case 'find-issue':
-            const url = /*request.myWebApp*/ `${secrets.myWebApp}/${encodeURIComponent(request.tekst.trim())}`;
-            console.log('find-issue url', url)
-            //if (!tab) {
-                chrome.tabs.create({url});
-            //}
-            sendResponse({ found: true });
-            return true;
+        case 'find-question':
+            const url = `${secrets.myWebApp}/${encodeURIComponent(message.subject.trim())}`;
+            console.log('find-question url', url)
+            chrome.tabs.create({ url });
+            return Promise.resolve({ found: true });
+
+        default:
+            alert('unknown event:' + message.eventName)
             break;
     }
 });
@@ -51,21 +51,21 @@ function getStorage(key) {
     // Store the result  
     // await chrome.storage.local.set({[key]:fromPageLocalStore[0]});
     //eval(fromPageLocalStore);
-   let x = '{ pera: 1 }'
-   x;
+    let x = '{ pera: 1 }'
+    x;
 
 }
-  
+
 
 async function getWebAppLocalStorage() {
     const key = "SUPPORT_QUESTIONS"
 
     try {
-        const tab = await getCurrentTab(); 
+        const tab = await getCurrentTab();
 
         // Execute script in the current tab
         const results = await chrome.scripting.executeScript({
-            target: {tabId: tab.id}, 
+            target: { tabId: tab.id },
             //func: getStorage,
             files: ["web-app-storage.js"]
         });
@@ -73,11 +73,11 @@ async function getWebAppLocalStorage() {
         for (let item of results) {
             console.log('item', item);
             if (item.result) {
-                 if (item.result.q)
+                if (item.result.q)
                     console.log('q:', JSON.parse(item.result.q))
                 if (item.result.q)
                     console.log('a:', JSON.parse(item.result.a))
-             }
+            }
         }
         // console.log('fromPageLocalStore', fromPageLocalStore)
 
@@ -86,22 +86,21 @@ async function getWebAppLocalStorage() {
         // else {
         //     console.log('jokkkkkkkkkkkkkkkkkkkkkk')
         // }        
-    } 
-    catch(err) {
+    }
+    catch (err) {
         // Log exceptions
         console.log(`Problem with getting the ${key}`, err)
-    }    
+    }
 }
 
-
-function injectedFunction() {
-    const elem = document.querySelector("div.nH.V8djrc > div.nH > div.ha:not(.issue-finder-parent)")
-    const description = document.querySelector('h2', elem);
-    console.log('Description', description)
-    if (!description) {
+/*
+function injectChrome() {
+    const elem = document.querySelector("div.nH.V8djrc > div.nH > div.ha:not(.question-finder-parent)")
+    const subject = document.querySelector('h2', elem);
+    console.log('subject', subject)
+    if (!subject) {
         return;
     }
-    
     const span = document.createElement('span');
     span.innerHTML = '&nbsp;<i>Support</i>';
 
@@ -111,34 +110,34 @@ function injectedFunction() {
     const a = document.createElement('a');
     a.appendChild(img);
     a.appendChild(span);
-    a.classList.add('issue-finder')
+    a.classList.add('question-finder')
     a.style.marginLeft = '20px';
     a.style.fontSize = '14px';
 
-    a.addEventListener("click", (e) => {
-        const tekst = elem.querySelector('h2').textContent;
-        chrome.runtime.sendMessage( {
-            eventName: 'find-issue',
-            tekst
-        }, (response) => {
-            console.log('found issue: ', response);
-          });
+    a.addEventListener("click", async (e) => {
+        const subject = elem.querySelector('h2').textContent;
+        const response = await chrome.runtime.sendMessage({
+            eventName: 'find-question',
+            subject
+        });
+        console.log('found question: ', response);
         e.stopPropagation();
     });
 
-
     elem.appendChild(a);
-    elem.classList.add('issue-finder-parent');
+    elem.classList.add('question-finder-parent');
 
     //document.body.style.backgroundColor = 'orange';
 }
+*/
+
 
 var btnSyncHandlerInjected = false;
 
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
     if (tab.status === "complete") {
         console.log(">>> completed", tab.url)
-        if (tab.url.includes("/Support")) { //https://slavkopar.github.io/Support")) {
+        if (tab.url.includes("/Support")) {
             if (!btnSyncHandlerInjected) {
                 console.log('btnSyncHandlerInjected', btnSyncHandlerInjected)
                 btnSyncHandlerInjected = true;
@@ -147,16 +146,23 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
         }
         else if (tab.url.includes('https://mail.google.com/mail/')) {
             try {
-                //aBrowser.tabs.insertCSS(tabId, {file: "x.css"});
-                // const results = await chrome.scripting.executeScript({
-                //     target: {tabId: tab.id}, 
-                //     files: ["draw-button.js"]
+                // chrome.scripting.executeScript({
+                //     target: { tabId: tab.id },
+                //     function: injectChrome
                 // });
-                chrome.scripting.executeScript({
-                    target: { tabId: tab.id },
-                    function: injectedFunction
-                  });
 
+            } catch (e) {
+                console.error(e)
+            }
+        }
+        else if (tab.url.includes('https://outlook.live.com/mail/')) {
+            try {
+                // await chrome.scripting.executeScript({
+                //     target: { tabId },
+                //     files: ["scripts/edge.js"]
+                // }, (args) => {
+                //     console.log('args......', ...args)
+                // });
             } catch (e) {
                 console.error(e)
             }
@@ -164,11 +170,10 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
     }
 });
 
-
-function debounce(timeout, callback) {
-    let timeoutID = 0;
-    return (event) => {
-      clearTimeout(timeoutID);
-      timeoutID = setTimeout(() => callback(event), timeout);
-    };
-}
+const debounce = (fn, delay) => {
+    let timerId;
+    return (...args) => {
+        clearTimeout(timerId);
+        timerId = setTimeout(() => fn(...args), delay);
+    }
+};

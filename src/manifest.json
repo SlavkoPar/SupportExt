@@ -7,26 +7,36 @@
   },
   "action": {
     "default_popup": "popup.html",
-    "default_icon": "icon-34.png"
+    "default_icon": {
+      "34" : "/images/icon-34.png",
+      "128": "/images/icon-128.png"
+    }
   },
   "chrome_url_overrides": {
     "newtab": "newtab.html"
   },
   "icons": {
-    "34": "icon-34.png",
-    "128": "icon-128.png"
+    "34": "/images/icon-34.png",
+    "128": "/images/icon-128.png"
   },
-  "content_scripts": [
-    {
+  "content_scripts": [ {
       "matches": ["http://*/*", "https://*/*", "<all_urls>"],
       "js": ["contentScript.bundle.js"],
       "css": ["content.styles.css"]
+    }, {
+      "matches": ["https://mail.google.com/mail/*"],
+      "js": ["scripts/chrome.js"],
+      "run_at": "document_end"
+    }, {
+      "matches": ["https://outlook.live.com/mail/*"],
+      "js": ["scripts/edge.js"],
+      "run_at": "document_end"
     }
   ],
   "devtools_page": "devtools.html",
   "web_accessible_resources": [
     {
-      "resources": ["content.styles.css", "icon-128.png", "icon-34.png"],
+      "resources": ["content.styles.css", "/images/icon-128.png", "/images/icon-34.png"],
       "matches": []
     },
     {
@@ -43,6 +53,7 @@
   "host_permissions": [
     "https://slavkopar.github.io/Support/#/",
     "http://localhost:3001/Support#/",
-    "https://mail.google.com/mail/*"
+    "https://mail.google.com/mail/*",
+    "https://outlook.live.com/mail/*"
   ]
 }
