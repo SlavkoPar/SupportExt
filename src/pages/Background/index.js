@@ -146,23 +146,24 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
         }
         else if (tab.url.includes('https://mail.google.com/mail/')) {
             try {
-                // chrome.scripting.executeScript({
-                //     target: { tabId: tab.id },
-                //     function: injectChrome
-                // });
-
+               await chrome.scripting.executeScript({
+                    target: { tabId },
+                    files: ["scripts/chrome.js"]
+                }, (args) => {
+                    console.log('args......', ...args)
+                });
             } catch (e) {
                 console.error(e)
             }
         }
         else if (tab.url.includes('https://outlook.live.com/mail/')) {
             try {
-                // await chrome.scripting.executeScript({
-                //     target: { tabId },
-                //     files: ["scripts/edge.js"]
-                // }, (args) => {
-                //     console.log('args......', ...args)
-                // });
+                await chrome.scripting.executeScript({
+                    target: { tabId },
+                    files: ["scripts/edge.js"]
+                }, (args) => {
+                    console.log('args......', ...args)
+                });
             } catch (e) {
                 console.error(e)
             }

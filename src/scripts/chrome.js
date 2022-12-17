@@ -1,23 +1,17 @@
-var nTimes = 0;
-function injectChrome() {
-    const parent = document.querySelector("div.nH.V8djrc > div.nH > div.ha") //:not(.question-finder-parent)")
-    console.log('parent', parent)
-    console.log('nTimes', ++nTimes)
-    if (nTimes > 30)
+function createLink() {
+    const parent = document.querySelector("div.nH.V8djrc > div.nH > div.ha")
+    console.log('============================= parent:', parent)
+    // tabs.onUpdated with status: "complete" happens a few times
+    // ListView rather than DetailView
+
+    if (!parent || parent.classList.contains('question-finder'))
         return;
 
-    if (!parent) {
-        setTimeout(injectChrome, 500)
-        return;
-    }
-    const subject = document.querySelector('h2', parent);
+    const subject = parent.querySelector('h2');
     console.log('subject', subject)
-    if (!subject) {
-        setTimeout(injectChrome, 500)
-        return;
-    }
+    
     const span = document.createElement('span');
-    span.innerHTML = '&nbsp;<i>Support</i>';
+    span.innerHTML = '<i>Support</i>';
 
     const img = document.createElement('img');
     img.src = chrome.runtime.getURL('/images/Support.png');
@@ -41,8 +35,8 @@ function injectChrome() {
         e.stopPropagation();
     });
 
+    parent.classList.add('question-finder');
     parent.appendChild(a);
-    parent.classList.add('question-finder-parent');
 }
 
-setTimeout(injectChrome, 1000);
+setTimeout(createLink, 1000);

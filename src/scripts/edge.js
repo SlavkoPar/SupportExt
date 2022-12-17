@@ -1,58 +1,27 @@
-var grandPaSelector = "div.LBktY";
-var selector2 = "div.LiYQG";
-
-// :not(.question-finder-parent)
 
 function callBack(mutations) {
     console.log('---------------------------------------------------->>>')
     console.log('==========>>>', { mutations })
-    injectEdge();
+    createLink();
 }
 
-var nTimes = 0;
-function injectEdge() {
-    console.log('=========================================')
-    console.log(`injectEdge(${++nTimes})`)
+var parentSelector = "div.UXx3I";
 
-    const grandPaContainer = document.querySelector(grandPaSelector);
-    console.log(grandPaContainer ? "IMA grandPaContainer" : "NEMA grandPaContainer")
-    if (!grandPaContainer) {
+function createLink() {
+    console.log('=========================================')
+
+    const parent = document.querySelector(parentSelector);
+    console.log(parent ? "IMA parent" : "NEMA parent")
+    if (!parent || parent.classList.contains('question-finder'))
         // ListView rather than DetailView
         return
-    }
 
-    const parentSelector = "div.UXx3I" //:not(.question-finder-parent)";
-    const parent = document.querySelector(parentSelector, grandPaContainer)  // :not(.question-finder-parent)
-    //const parentSelector = "div.full.RCfNE.allowTextSelection" //:not(.question-finder-parent)";
-    //const parent = document.querySelector(parentSelector, grandPaContainer)  // :not(.question-finder-parent)
-
-    //const elem = document.querySelector("div.iPBfK.jmmB7.NUbju:not(.question-finder-parent)")
-    
-    //const container = document.querySelector("div.iPBfK.jmmB7.NUbju")
-    //const container = document.querySelector("div.full.RCfNE.allowTextSelection:not(.question-finder-parent)")  
-    //const selector = "div.full.RCfNE.allowTextSelection:not(.question-finder-parent)";
-    /*
-    const selector = "div.full.RCfNE.allowTextSelection:not(.question-finder-parent)";
-    const container = document.querySelector(selector)  // :not(.question-finder-parent)
-    */
-    console.log(parent ? "IMA PARENT" : "NEMA PARENT")
-    if (!parent) {
-        setTimeout(injectEdge, 1000)
+    const subject = parent.querySelector('span.full.UAxMv');
+    if (!subject)
         return
-    }
-
-    //const elem = document.querySelector("a.question-finder", container)
-
-    console.log('IMA KONTEJNER TRAZI PARENT')
-    const subject = document.querySelector('span.full.UAxMv', parent);
-    if (!subject) {
-        setTimeout(injectEdge, 1000)
-        return
-    }
     console.log('subject', subject);
-    console.log('parent', parent)
 
-    let alreadyAdded = parent.classList.contains('question-finder-parent');
+    let alreadyAdded = parent.classList.contains('question-finder');
     alreadyAdded = parent.querySelector('div.xyz.vmaKW.kyCyq');
     if (alreadyAdded) {
         console.log('Already added')
@@ -76,7 +45,7 @@ function injectEdge() {
     a.style.fontSize = '14px';
 
     a.addEventListener("click", (e) => {
-        const subject = document.querySelector('span.full.UAxMv', parent).textContent;
+        const subject = parent.querySelector('span.full.UAxMv').textContent;
         console.log('subject click', subject)
 
         const message = {
@@ -92,21 +61,14 @@ function injectEdge() {
     parent.appendChild(div);
     console.log('DODAO TRECI DIV')
 
-    console.log('createdLink  grandPaContainer:', grandPaContainer)
-    parent.classList.add('question-finder-parent');
-
+    parent.classList.add('question-finder');
 
     const mutationObserver = new MutationObserver(callBack);
 
-    mutationObserver.observe(document.querySelector(grandPaSelector), {
+    mutationObserver.observe(document.querySelector('div.HOVUa'), {
         childList: true,
         subtree: true
     });
-
-    // mutationObserver.observe(document.querySelector(selector2), {
-    //     childList: true,
-    //     subtree: true
-    // });
 }
 
-setTimeout(injectEdge, 5000);
+setTimeout(createLink, 2000);

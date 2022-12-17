@@ -23,14 +23,6 @@
       "matches": ["http://*/*", "https://*/*", "<all_urls>"],
       "js": ["contentScript.bundle.js"],
       "css": ["content.styles.css"]
-    }, {
-      "matches": ["https://mail.google.com/mail/*"],
-      "js": ["scripts/chrome.js"],
-      "run_at": "document_end"
-    }, {
-      "matches": ["https://outlook.live.com/mail/*"],
-      "js": ["scripts/edge.js"],
-      "run_at": "document_end"
     }
   ],
   "devtools_page": "devtools.html",
