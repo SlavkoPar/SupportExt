@@ -21,8 +21,7 @@ function createLink() {
         return
     console.log('subject', subject);
 
-    let alreadyAdded = parent.classList.contains('question-finder');
-    alreadyAdded = parent.querySelector('div.xyz.vmaKW.kyCyq');
+    const alreadyAdded = parent.querySelector('div.xyz.vmaKW.kyCyq');
     if (alreadyAdded) {
         console.log('Already added')
         return
@@ -65,7 +64,7 @@ function createLink() {
 
     const mutationObserver = new MutationObserver(callBack);
 
-    mutationObserver.observe(document.querySelector('div.HOVUa'), {
+    mutationObserver.observe(document.querySelector('div.g_zET'), { // div.HOVUa
         childList: true,
         subtree: true
     });
