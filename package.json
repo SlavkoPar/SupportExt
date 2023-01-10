@@ -1,7 +1,7 @@
 {
   "name": "support-ext",
   "version": "1.0.1",
-  "description": "Chrome extension for Support. <br/>For Question given, it returns Answers!",
+  "description": "Chrome extension for Support. For Question given in email subject, it returns Answers !!!",
   "license": "MIT",
   "repository": {
     "type": "git",

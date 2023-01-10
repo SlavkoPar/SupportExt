@@ -14,7 +14,7 @@ function createLink() {
     span.innerHTML = '<i>Support</i>';
 
     const img = document.createElement('img');
-    img.src = chrome.runtime.getURL('/images/Support.png');
+    img.src = chrome.runtime.getURL('/images/support.ico');
 
     const a = document.createElement('a');
     a.appendChild(img);

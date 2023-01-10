@@ -93,45 +93,6 @@ async function getWebAppLocalStorage() {
     }
 }
 
-/*
-function injectChrome() {
-    const elem = document.querySelector("div.nH.V8djrc > div.nH > div.ha:not(.question-finder-parent)")
-    const subject = document.querySelector('h2', elem);
-    console.log('subject', subject)
-    if (!subject) {
-        return;
-    }
-    const span = document.createElement('span');
-    span.innerHTML = '&nbsp;<i>Support</i>';
-
-    const img = document.createElement('img');
-    img.src = chrome.runtime.getURL('/images/Support.png');
-
-    const a = document.createElement('a');
-    a.appendChild(img);
-    a.appendChild(span);
-    a.classList.add('question-finder')
-    a.style.marginLeft = '20px';
-    a.style.fontSize = '14px';
-
-    a.addEventListener("click", async (e) => {
-        const subject = elem.querySelector('h2').textContent;
-        const response = await chrome.runtime.sendMessage({
-            eventName: 'find-question',
-            subject
-        });
-        console.log('found question: ', response);
-        e.stopPropagation();
-    });
-
-    elem.appendChild(a);
-    elem.classList.add('question-finder-parent');
-
-    //document.body.style.backgroundColor = 'orange';
-}
-*/
-
-
 var btnSyncHandlerInjected = false;
 
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {

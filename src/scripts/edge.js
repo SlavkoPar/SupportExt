@@ -31,7 +31,7 @@ function createLink() {
     div.classList.add('xyz', 'vmaKW', 'kyCyq');
 
     const img = document.createElement('img');
-    img.src = chrome.runtime.getURL('/images/Support.png');
+    img.src = chrome.runtime.getURL('/images/support.ico');
 
     const span = document.createElement('span');
     span.innerHTML = '<i>Support</i>';
