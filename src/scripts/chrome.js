@@ -1,6 +1,6 @@
 function createLink() {
     const parent = document.querySelector("div.nH.V8djrc > div.nH > div.ha")
-    console.log('============================= parent:', parent)
+    // console.log('============================= parent:', parent)
     // tabs.onUpdated with status: "complete" happens a few times
     // ListView rather than DetailView
 
@@ -8,7 +8,7 @@ function createLink() {
         return;
 
     const subject = parent.querySelector('h2');
-    console.log('subject', subject)
+    // console.log('subject', subject)
     
     const span = document.createElement('span');
     span.innerHTML = '<i>Support</i>';
@@ -25,13 +25,13 @@ function createLink() {
 
     a.addEventListener("click", (e) => {
         const subject = parent.querySelector('h2').textContent;
-        console.log({subject})
+        // console.log({subject})
         const message = {
             eventName: 'find-question',
             subject
         }
         const response = chrome.runtime.sendMessage(message);
-        console.log('Got an asynchronous response with the data from the service worker => ', response);
+        // console.log('Got an asynchronous response with the data from the service worker => ', response);
         e.stopPropagation();
     });
 

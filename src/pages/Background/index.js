@@ -1,14 +1,7 @@
 import { secrets } from '../../../secrets.development';
 
-console.log('This is the background page !');
-console.log('Put the background scripts here.');
-
-
-console.log('secrets.myWebApp:', secrets.myWebApp)
-
 chrome.runtime.onInstalled.addListener((reason) => {
     if (reason === chrome.runtime.OnInstalledReason.INSTALL) {
-        console.log('reason', reason)
         chrome.tabs.create({
             url: `${secrets.myWebApp}`
         });
@@ -16,12 +9,12 @@ chrome.runtime.onInstalled.addListener((reason) => {
 });
 
 chrome.runtime.onMessage.addListener(message => {
-    console.log('onMessage request >>>>>>>>>>>>>', message)
+    // console.log('onMessage request >>>>>>>>>>>>>', message)
     switch (message.eventName) {
         case 'openWebApp':
             let queryOptions = { url: message.myWebApp };
             let [tab] = chrome.tabs.query(queryOptions);
-            console.log('tab', message.myWebApp, tab)
+            // console.log('tab', message.myWebApp, tab)
             if (!tab) {
                 chrome.tabs.create({ url: message.myWebApp });
             }
@@ -29,7 +22,7 @@ chrome.runtime.onMessage.addListener(message => {
 
         case 'find-question':
             const url = `${secrets.myWebApp}/${encodeURIComponent(message.subject.trim())}`;
-            console.log('find-question url', url)
+            // console.log('find-question url', url)
             chrome.tabs.create({ url });
             return Promise.resolve({ found: true });
 
@@ -69,14 +62,14 @@ async function getWebAppLocalStorage() {
             //func: getStorage,
             files: ["web-app-storage.js"]
         });
-        console.log('results.length', results.length);
+        // console.log('results.length', results.length);
         for (let item of results) {
-            console.log('item', item);
+            //console.log('item', item);
             if (item.result) {
-                if (item.result.q)
-                    console.log('q:', JSON.parse(item.result.q))
-                if (item.result.q)
-                    console.log('a:', JSON.parse(item.result.a))
+                // if (item.result.q)
+                //     console.log('q:', JSON.parse(item.result.q))
+                // if (item.result.q)
+                //     console.log('a:', JSON.parse(item.result.a))
             }
         }
         // console.log('fromPageLocalStore', fromPageLocalStore)
@@ -97,10 +90,10 @@ var btnSyncHandlerInjected = false;
 
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
     if (tab.status === "complete") {
-        console.log(">>> completed", tab.url)
+        // console.log(">>> completed", tab.url)
         if (tab.url.includes("/Support")) {
             if (!btnSyncHandlerInjected) {
-                console.log('btnSyncHandlerInjected', btnSyncHandlerInjected)
+                // console.log('btnSyncHandlerInjected', btnSyncHandlerInjected)
                 btnSyncHandlerInjected = true;
                 await getWebAppLocalStorage();
             }
