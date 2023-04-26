@@ -8,6 +8,19 @@ chrome.runtime.onInstalled.addListener((reason) => {
     }
 });
 
+// TODO next phase
+// const reactPost = () => {
+//      // Simple PUT request with a JSON body using fetch
+//      const requestOptions = {
+//         method: 'PUT',
+//         headers: { 'Content-Type': 'application/json' },
+//         body: JSON.stringify({ title: 'React PUT Request Example' })
+//     };
+//     fetch('https://support-knowledge.onrender.com/save-question', requestOptions)
+//         .then(response => response.json())
+//         .then(data => console.log({ postId: data.id }));
+// }
+
 chrome.runtime.onMessage.addListener(message => {
     // console.log('onMessage request >>>>>>>>>>>>>', message)
     switch (message.eventName) {
@@ -21,7 +34,7 @@ chrome.runtime.onMessage.addListener(message => {
             break;
 
         case 'find-question':
-            const url = `${secrets.myWebApp}/${encodeURIComponent(message.subject.trim())}`;
+            const url = `${secrets.myWebApp}/${encodeURIComponent(message.subject.trim())}/${encodeURIComponent(message.email.trim())}`;
             // console.log('find-question url', url)
             chrome.tabs.create({ url });
             return Promise.resolve({ found: true });

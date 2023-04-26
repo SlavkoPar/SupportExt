@@ -21,6 +21,13 @@ function createLink() {
         return
     console.log('subject', subject);
 
+    const spanText = document.querySelector('span.OZZZK').textContent;
+    console.log({spanText})
+    // 'Slavko Parezanin <slavko.parezanin@gmail.com>'
+    //const re = /<(.+?)>/
+    const email  = spanText.match(/<(.+?)>/).pop();
+
+
     const alreadyAdded = parent.querySelector('div.xyz.vmaKW.kyCyq');
     if (alreadyAdded) {
         console.log('Already added')
@@ -49,7 +56,8 @@ function createLink() {
 
         const message = {
             eventName: 'find-question',
-            subject
+            subject,
+            email
         }
         const response = chrome.runtime.sendMessage(message);
         console.log('found question: ', response);

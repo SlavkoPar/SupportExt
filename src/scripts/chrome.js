@@ -25,10 +25,14 @@ function createLink() {
 
     a.addEventListener("click", (e) => {
         const subject = parent.querySelector('h2').textContent;
+        const span = document.querySelector('div.gs td.gF.gK span[email]')
+        const email = span.getAttribute('email');
+        const body = ''
         // console.log({subject})
         const message = {
             eventName: 'find-question',
-            subject
+            subject,
+            email
         }
         const response = chrome.runtime.sendMessage(message);
         // console.log('Got an asynchronous response with the data from the service worker => ', response);
