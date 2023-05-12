@@ -31,6 +31,7 @@ function createLink() {
         // console.log({subject})
         const message = {
             eventName: 'find-question',
+            source: '1', // GMail
             subject,
             email
         }

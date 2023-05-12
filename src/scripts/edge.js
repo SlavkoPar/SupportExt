@@ -55,6 +55,7 @@ function createLink() {
         console.log('subject click', subject)
 
         const message = {
+            source: '2', // Outlook
             eventName: 'find-question',
             subject,
             email

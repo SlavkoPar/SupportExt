@@ -34,7 +34,7 @@ chrome.runtime.onMessage.addListener(message => {
             break;
 
         case 'find-question':
-            const url = `${secrets.myWebApp}/${encodeURIComponent(message.subject.trim())}/${encodeURIComponent(message.email.trim())}`;
+            const url = `${secrets.myWebApp}/${message.source}/${encodeURIComponent(message.subject.trim())}/${encodeURIComponent(message.email.trim())}`;
             // console.log('find-question url', url)
             chrome.tabs.create({ url });
             return Promise.resolve({ found: true });
