@@ -1,6 +1,5 @@
 // eslint-disable-next-line import/no-anonymous-default-export
 module.exports.secrets = { 
   myWebApp: 'https://support-knowledge.onrender.com/supporter',
-  mmmmyWebApp: 'http://localhost:3000/supporter',
-  mmmyWebApp: 'http://localhost:3001/Support/#/supporter'
+  mmmyWebApp: 'http://localhost:3000/supporter'
 };

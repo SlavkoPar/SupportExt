@@ -15,6 +15,6 @@
     "noEmit": false,
     "jsx": "react"
   },
-  "include": ["src", "src/pages/Content/web-app-storage.js"],
+  "include": ["src"],
   "exclude": ["build", "node_modules"]
 }

@@ -45,71 +45,11 @@ chrome.runtime.onMessage.addListener(message => {
     }
 });
 
-async function getCurrentTab() {
-    let queryOptions = { active: true, currentWindow: true };
-    let [tab] = await chrome.tabs.query(queryOptions);
-    return tab;
-}
-
-function getStorage(key) {
-    //const fromPageLocalStore = localStorage['${key}']
-    //alert(fromPageLocalStore)
-    // Store the result  
-    // await chrome.storage.local.set({[key]:fromPageLocalStore[0]});
-    //eval(fromPageLocalStore);
-    let x = '{ pera: 1 }'
-    x;
-
-}
-
-
-async function getWebAppLocalStorage() {
-    const key = "SUPPORT_QUESTIONS"
-
-    try {
-        const tab = await getCurrentTab();
-
-        // Execute script in the current tab
-        const results = await chrome.scripting.executeScript({
-            target: { tabId: tab.id },
-            //func: getStorage,
-            files: ["web-app-storage.js"]
-        });
-        // console.log('results.length', results.length);
-        for (let item of results) {
-            //console.log('item', item);
-            if (item.result) {
-                // if (item.result.q)
-                //     console.log('q:', JSON.parse(item.result.q))
-                // if (item.result.q)
-                //     console.log('a:', JSON.parse(item.result.a))
-            }
-        }
-        // console.log('fromPageLocalStore', fromPageLocalStore)
-
-        // if (fromPageLocalStore)
-        //     console.log(JSON.parse(fromPageLocalStore))
-        // else {
-        //     console.log('jokkkkkkkkkkkkkkkkkkkkkk')
-        // }        
-    }
-    catch (err) {
-        // Log exceptions
-        console.log(`Problem with getting the ${key}`, err)
-    }
-}
-
-var btnSyncHandlerInjected = false;
 
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
     if (tab.status === "complete") {
         // console.log(">>> completed", tab.url)
         if (tab.url.includes("/Support")) {
-            if (!btnSyncHandlerInjected) {
-                // console.log('btnSyncHandlerInjected', btnSyncHandlerInjected)
-                btnSyncHandlerInjected = true;
-                await getWebAppLocalStorage();
-            }
         }
         else if (tab.url.includes('https://mail.google.com/mail/')) {
             try {
@@ -138,10 +78,3 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
     }
 });
 
-const debounce = (fn, delay) => {
-    let timerId;
-    return (...args) => {
-        clearTimeout(timerId);
-        timerId = setTimeout(() => fn(...args), delay);
-    }
-};

@@ -36,14 +36,11 @@
   ],
   "permissions": [
     "tabs",
-    "activeTab",
-    "scripting",
-    "storage"
+    "scripting"
   ],
   "host_permissions": [
     "https://support-knowledge.onrender.com/*",
     "http://localhost:3000/*",
-    "http://localhost:3001/Support#/",
     "https://mail.google.com/mail/*",
     "https://outlook.live.com/mail/*"
   ]

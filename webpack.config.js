@@ -141,12 +141,7 @@ var options = {
           from: 'src/pages/Content/content.styles.css',
           to: path.join(__dirname, 'build'),
           force: true,
-        },
-        {
-          from: 'src/pages/Content/web-app-storage.js',
-          to: path.join(__dirname, 'build'),
-          force: true,
-        },        
+        }            
       ],
     }),
     new CopyWebpackPlugin({
