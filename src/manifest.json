@@ -39,8 +39,6 @@
     "scripting"
   ],
   "host_permissions": [
-    "https://support-knowledge.onrender.com/*",
-    "http://localhost:3000/*",
     "https://mail.google.com/mail/*",
     "https://outlook.live.com/mail/*"
   ]
