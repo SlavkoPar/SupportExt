@@ -28,6 +28,7 @@ function createLink() {
         const span = document.querySelector('div.gs td.gF.gK span[email]')
         const email = span.getAttribute('email');
         const body = ''
+
         // console.log({subject})
         const message = {
             eventName: 'find-question',

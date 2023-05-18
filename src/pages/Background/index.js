@@ -3,7 +3,7 @@ import { secrets } from '../../../secrets.development';
 chrome.runtime.onInstalled.addListener((reason) => {
     if (reason === chrome.runtime.OnInstalledReason.INSTALL) {
         chrome.tabs.create({
-            url: `${secrets.myWebApp}`
+            url: `${secrets.myWebApp}/supporter`
         });
     }
 });
@@ -33,14 +33,21 @@ chrome.runtime.onMessage.addListener(message => {
             }
             break;
 
-        case 'find-question':
-            const url = `${secrets.myWebApp}/${message.source}/${encodeURIComponent(message.subject.trim())}/${encodeURIComponent(message.email.trim())}`;
-            // console.log('find-question url', url)
-            chrome.tabs.create({ url });
+        case 'find-question': {
+            chrome.storage.local.get(['url', 'forwardEmail'], function (result) {
+                console.log(result.url)
+                let params = `${message.source}/${encodeURIComponent(message.subject.trim())}`
+                if (result.forwardEmail === true) 
+                    params += `/${encodeURIComponent(message.email.trim())}`
+                const url = `${result.url}/supporter/${params}`;
+                // console.log('find-question url', url)
+                chrome.tabs.create({ url });
+              });
             return Promise.resolve({ found: true });
+        }
 
         default:
-            alert('unknown event:' + message.eventName)
+            console.log('unknown event:' + message.eventName)
             break;
     }
 });
