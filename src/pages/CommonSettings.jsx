@@ -1,12 +1,8 @@
 import React, { useState } from 'react';
-import logo from '../../assets/img/';
-import './Options.css';
+import logo from '../assets/img/support-128.png';
+import './Popup.css';
 
-interface Props {
-  title: string;
-}
-
-const Options: React.FC<Props> = ({ title }: Props) => {
+const CommonSettings = () => {
 
   const url1 = 'https://support-knowledge.onrender.com';
   const [url, setUrl] = useState(url1);
@@ -18,7 +14,7 @@ const Options: React.FC<Props> = ({ title }: Props) => {
       setUrl2(result.url2)
     }
   });
-  const url2Change = (e: any) => {
+  const url2Change = (e) => {
     setUrl2(e.target.value)
     chrome.storage.local.set({ 'url2': e.target.value }, function () {
     });
@@ -38,7 +34,7 @@ const Options: React.FC<Props> = ({ title }: Props) => {
       }
     }
   });
-  const radioChange = (e: any) => {
+  const radioChange = (e) => {
     chrome.storage.local.set({ 'radioValue': e.target.value }, function () {
       setRadioValue(e.target.value);
       if (e.target.value === '1') {
@@ -59,23 +55,21 @@ const Options: React.FC<Props> = ({ title }: Props) => {
       setForwardEmail(result.forwardEmail)
     }
   });
-  const forwardEmailChange = (e: any) => {
+  const forwardEmailChange = (e) => {
     setForwardEmail(e.target.checked)
     chrome.storage.local.set({ 'forwardEmail': e.target.checked }, function () {
     });
   }
 
-  //return <div className="OptionsContainer">{title.toUpperCase()} PAGE</div>;
   return (
-    <div className="OptionsContainer">
-      {title.toUpperCase()} PAGE
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
 
-      <img src={logo} className="App-logo" alt="logo" />
-
-        <fieldset>
+        <fieldset style={{ width: "100%", border: '1px solid silver', borderRadius: '5px' }}>
           <legend>Please select Hosting of your Web App</legend>
           <div>
-            <form name="myForm">
+            <form name="myForm" style={{ width: '100%' }}>
               <table border="1" width="100%">
                 <tbody>
                   <tr>
@@ -102,10 +96,10 @@ const Options: React.FC<Props> = ({ title }: Props) => {
           </div>
         </fieldset>
 
-        <fieldset>
+        <fieldset style={{ width: "100%", border: '1px solid silver', borderRadius: '5px' }}>
           <legend>Fields that will be forwarded to the Web App</legend>
           <div>
-            <form name="myForm2">
+            <form name="myForm2" style={{ width: '100%' }}>
               <table width="100%">
                 <tbody>
                   <tr>
@@ -135,8 +129,10 @@ const Options: React.FC<Props> = ({ title }: Props) => {
         >
           Open Web App
         </a>
+
+      </header>
     </div>
-  )
+  );
 };
 
-export default Options;
+export default CommonSettings;

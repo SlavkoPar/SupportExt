@@ -6,3 +6,13 @@
   align-items: center;
   justify-content: center;
 }
+
+fieldset { 
+  width: 100%;
+  border: 1px solid silver;
+  border-radius: 5px;
+}
+
+form {
+  width: 100%;
+}
