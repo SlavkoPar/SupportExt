@@ -2,9 +2,17 @@ import { secrets } from '../../../secrets.development';
 
 chrome.runtime.onInstalled.addListener((reason) => {
     if (reason === chrome.runtime.OnInstalledReason.INSTALL) {
-        chrome.tabs.create({
-            url: `${secrets.myWebApp}/supporter`
-        });
+        chrome.storage.local.get(['url'], function (result) {
+            let url;
+            if (result.url) {
+                url = result.url  + '/supporter';
+            } 
+            else {
+                url = secrets.myWebApp + '/supporter';
+                chrome.storage.local.set({ 'url': url })
+            }
+            chrome.tabs.create({ url });
+        })
     }
 });
 
@@ -35,12 +43,11 @@ chrome.runtime.onMessage.addListener(message => {
 
         case 'find-question': {
             chrome.storage.local.get(['url', 'forwardEmail'], function (result) {
-                console.log(result.url)
+                let myUrl = result.url ? result.url : secrets.myWebApp;
                 let params = `${message.source}/${encodeURIComponent(message.subject.trim())}`
                 if (result.forwardEmail === true) 
                     params += `/${encodeURIComponent(message.email.trim())}`
-                const url = `${result.url}/supporter/${params}`;
-                // console.log('find-question url', url)
+                const url = `${myUrl}/supporter/${params}`;
                 chrome.tabs.create({ url });
               });
             return Promise.resolve({ found: true });

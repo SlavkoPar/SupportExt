@@ -8,7 +8,7 @@ import './index.css';
 chrome.storage.local.get(['url'], function (result) {
     chrome.runtime.sendMessage({
         eventName: 'openWebApp',
-        myWebApp: (result.url ? result.url : secrets.myWebApp)  + '/supporter'
+        myWebApp: (result.url ? result.url : secrets.myWebApp) + '/supporter'
     });
   });
 

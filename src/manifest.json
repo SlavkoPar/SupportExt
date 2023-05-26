@@ -9,13 +9,13 @@
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
-      "34" : "/images/support-34.png",
-      "128": "/images/support-128.png"
+      "34" : "support-34.png",
+      "128": "support-128.png"
     }
   },
   "icons": {
-    "34": "/images/support-34.png",
-    "128": "/images/support-128.png"
+    "34": "support-34.png",
+    "128": "support-128.png"
   },
   "content_scripts": [ {
       "matches": ["http://*/*", "https://*/*", "<all_urls>"],
@@ -26,13 +26,9 @@
   "devtools_page": "devtools.html",
   "web_accessible_resources": [
     {
-      "resources": ["content.styles.css", "/images/support-128.png", "/images/support-34.png"],
-      "matches": []
-    },
-    {
-      "resources": ["/images/*"],
+      "resources": ["content.styles.css", "support-128.png", "support-34.png", "images/support.ico"],
       "matches": ["<all_urls>"]
-    }    
+    }
   ],
   "permissions": [
     "storage",
